@@ -1,11 +1,16 @@
-;;; use-evil.el -*- lexical-binding: t; -*-
-;;; Commentary: Evil mode configuration
+;;; use-evil.el --- Evil mode configuration -*- lexical-binding: t; -*-
+
+;;; Commentary:
+
+;; Evil mode configuration.
+
 ;;; Code:
+
 (use-package evil
-  :ensure t 
+  :ensure t
   :demand t
   :init
-  (setq evil-want-integration t) 
+  (setq evil-want-integration t)
   (setq evil-vsplit-window-right t)
   (setq evil-split-window-below t)
   (setq evil-want-keybinding nil)
@@ -75,4 +80,4 @@
 
 
 (provide 'use-evil)
-;;; end use-evil.el
+;;; use-evil.el ends here.

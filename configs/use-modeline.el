@@ -6,11 +6,14 @@
 
 ;;; Code:
 
+;; Include custom vars
+(require 'custom-vars)
+
 (use-package nerd-icons
   :ensure t
   :demand t
   :custom
-  (nerd-icons-font-family xapvar/default-font-family))
+  (nerd-icons-font-family xapconst/default-font-family))
 
 (use-package doom-modeline
   :ensure t

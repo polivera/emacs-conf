@@ -6,8 +6,12 @@
 
 ;;; Code:
 
+;; Custom variables
+(require 'custom-vars)
+
+;; Elpaca configuration
 (defvar elpaca-installer-version 0.7)
-(defvar elpaca-directory (expand-file-name "elpaca/" xapvar/autogen-folder-path))
+(defvar elpaca-directory (expand-file-name "elpaca/" xapconst/autogen-folder-path))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"

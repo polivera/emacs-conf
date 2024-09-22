@@ -1,6 +1,14 @@
-;;; use-projectile.el -*- lexical-binding: t; -*-
-;;; Commentary: This package provides orderless completion that divides pattern in to space-separated components
+;;; use-projectile.el --- Projectile configuration file -*- lexical-binding: t; -*-
+
+;;; Commentary:
+
+;; This package provides orderless completion that divides pattern in to space-separated components
+
 ;;; Code:
+
+;; Include custom vars.
+(require 'custom-vars)
+
 (use-package projectile
   :ensure t
   :demand t
@@ -12,11 +20,11 @@
     "p t" '(projectile-run-vterm-other-window :which-key "Run vterm")
   )
   :init
-  (setq projectile-cache-file xapvar/projectile-cache-file)
-  (setq projectile-known-projects-file xapvar/projectile-bookmarks-file)
+  (setq projectile-cache-file xapconst/projectile-cache-file)
+  (setq projectile-known-projects-file xapconst/projectile-bookmarks-file)
   (projectile-mode +1)
 )
 
 (provide 'use-projectile)
-;;; end use-projectile.el
+;;; use-projectile.el ends here.
 

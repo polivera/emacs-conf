@@ -7,11 +7,15 @@
 ;;; Code:
 
 (use-package flycheck
-  :ensure t
+  :ensure (:wait t)
   :demand t
   :init
-  (global-flycheck-mode))
+  ;; This makes flycheck to inherit the current path for elisp
+  ;; instead of using the default path without user added ones.
+  (setq flycheck-emacs-lisp-load-path 'inherit)
+  (global-flycheck-mode)
+)
 
 
 (provide 'use-flycheck)
-;;; use-flycheck.el ends here
+;;; use-flycheck.el ends here.

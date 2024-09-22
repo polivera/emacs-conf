@@ -6,17 +6,8 @@
 
 ;;; Code:
 
-;; This set folders where the configuration is located
-;;     configs: repository package configuration files
-;;     custom: my custom packages (with configuration)
-(mapc
-    (lambda (string)
-    (add-to-list 'load-path (locate-user-emacs-file string)))
-    '("./configs" "./custom"))
-
 ;; base config
 (require 'use-elpaca)
-(require 'use-custom-vars)
 (require 'use-base-config)
 
 ;; Theme and layout
@@ -43,10 +34,12 @@
 (require 'use-treesit)
 
 ;; development
+(require 'use-lsp)
 (require 'use-company)
 (require 'use-flycheck)
 
-;; development - language specific
+;; development - language specific.
 (require 'use-elisp)
+(require 'use-go)
 
-;;; init.el ends here
+;;; init.el ends here.

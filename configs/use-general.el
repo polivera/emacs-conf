@@ -1,8 +1,12 @@
-;;; use-general.el -*- lexical-binding: t; -*-
-;;; Commentary: General key binder plugin
+;;; use-general.el --- General configuration file  -*- lexical-binding: t; -*-
+
+;;; Commentary:
+
+;; General key binder plugin
+
 ;;; Code:
 (use-package general
-  :ensure (:wait t) 
+  :ensure (:wait t)
   :demand t
   :config
   (general-create-definer xap/leader-key
@@ -24,4 +28,4 @@
 
 
 (provide 'use-general)
-;;; end use-general.el
+;;; use-general.el ends here.

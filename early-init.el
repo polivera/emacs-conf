@@ -5,15 +5,25 @@
 
 ;;; Code:
 
+;; This set folders where the configuration is located
+;;     configs: repository package configuration files
+;;     custom: my custom packages (with configuration)
+(mapc
+    (lambda (string)
+        (add-to-list 'load-path (locate-user-emacs-file string)))
+        '("./configs" "./custom"))
+
+;; Require custom vars to be used here
+(require 'custom-vars)
+
 ;; Define custom variables
-(defvar xapvar/autogen-folder-path (concat user-emacs-directory "autogen/") "Path to auto generated files.")
-(defvar xapvar/eln-cache-path (concat xapvar/autogen-folder-path "eln-cache/") "Path to eln cache direcory.")
-(defvar xapvar/gc-cons-threshold 100000000 "Default value of \"gc-cons-threshold\".")
-(defvar xapvar/gc-cons-percentage gc-cons-percentage "Default value of \"gc-cons-percentage\".")
-(defvar xapvar/vc-handled-backends vc-handled-backends "Default value of \"vc-handled-backends\".")
-(defvar xapvar/read-process-output (* 1024 3072) "Default value for \"read-process-output-max\" (3M).")
-(defvar xapvar/initial-background-color "#25272f" "Initial background color (before apply theme).")
-(defvar xapvar/initial-foreground-color "#B3B9C4" "Initial foreground color (before apply theme).")
+(defconst xapconst/gc-cons-threshold gc-cons-threshold "Default value of \"gc-cons-threshold\".")
+(defconst xapconst/gc-cons-percentage gc-cons-percentage "Default value of \"gc-cons-percentage\".")
+(defconst xapconst/vc-handled-backends vc-handled-backends "Default value of \"vc-handled-backends\".")
+(defconst xapconst/read-process-output (* 1024 3072) "Default value for \"read-process-output-max\" (3M).")
+(defconst xapconst/file-name-handler-alist file-name-handler-alist "Default value of \"file-name-handler-alist\".")
+(defconst xapconst/initial-background-color "#25272f" "Initial background color (before apply theme).")
+(defconst xapconst/initial-foreground-color "#B3B9C4" "Initial foreground color (before apply theme).")
 
 ;; Garbage collector
 (setq gc-cons-threshold most-positive-fixnum
@@ -23,29 +33,41 @@
 
 (add-hook 'emacs-startup-hook
   (lambda()
-    (setq gc-cons-threshold xapvar/gc-cons-threshold
-          gc-cons-percentage xapvar/gc-cons-percentage
-          file-name-halder-alist xapvar/file-name-handler-alist
-          vc-handled-backends xapvar/vc-handled-backends
-          read-process-output-max xapvar/read-process-output)))
+    (setq gc-cons-threshold xapconst/gc-cons-threshold
+          gc-cons-percentage xapconst/gc-cons-percentage
+          file-name-halder-alist xapconst/file-name-handler-alist
+          vc-handled-backends xapconst/vc-handled-backends
+          read-process-output-max xapconst/read-process-output)))
 
+;; Don't run GC on font caches
+(setq inhibit-compacting-font-caches t)
 
-;; Create foldder for auto-generated files if it does not exist
-(unless (file-directory-p xapvar/autogen-folder-path)
-  (make-directory xapvar/autogen-folder-path) (make-directory xapvar/eln-cache-path))
+  ;; Create foldder for auto-generated files if it does not exist
+(unless (file-directory-p xapconst/autogen-folder-path)
+  (make-directory xapconst/autogen-folder-path)
+  (make-directory xapconst/elpa-path)
+  (make-directory xapconst/eln-cache-path))
 
+;; Setting package configuration.
+(setq package-enable-at-startup nil) ; This is required by elpaca
+(setq package-user-dir xapconst/elpa-path)
+
+;; Set native compilation eln file path.
 (when (native-comp-available-p)
-  ;; Remove the original eln-cache.
+  (message "I went through here and loaded stuff")
   (setq native-comp-eln-load-path (cdr native-comp-eln-load-path))
-  ;; Add the new eln-cache.
-  (push xapvar/eln-cache-path native-comp-eln-load-path))
-
+  (defvar native-compile-target-directory xapconst/eln-cache-path)
+  (add-to-list 'native-comp-eln-load-path xapconst/eln-cache-path)
+  (startup-redirect-eln-cache xapconst/eln-cache-path)
+  (defvar native-comp-async-report-warnings-errors nil))
 
 ;; Layout configuration ------------------------------------------------------------------------------------------------
-(set-face-background 'default xapvar/initial-background-color)
-(set-face-foreground 'default xapvar/initial-foreground-color)
+(set-face-background 'default xapconst/initial-background-color)
+(set-face-foreground 'default xapconst/initial-foreground-color)
 (setq inhibit-startup-screen t)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (tooltip-mode -1)
+
+;;; early-init.el ends here.
