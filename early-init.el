@@ -54,11 +54,10 @@
 
 ;; Set native compilation eln file path.
 (when (native-comp-available-p)
-  (message "I went through here and loaded stuff")
   (setq native-comp-eln-load-path (cdr native-comp-eln-load-path))
   (defvar native-compile-target-directory xapconst/eln-cache-path)
   (add-to-list 'native-comp-eln-load-path xapconst/eln-cache-path)
-  (startup-redirect-eln-cache xapconst/eln-cache-path)
+  (defvar startup-redirect-eln-cache xapconst/eln-cache-path)
   (defvar native-comp-async-report-warnings-errors nil))
 
 ;; Layout configuration ------------------------------------------------------------------------------------------------

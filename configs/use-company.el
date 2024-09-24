@@ -1,6 +1,12 @@
-;;; use-company.el -*- lexical-binding: t; -*-
-;;; Commentary: 
+;;; use-company.el --- Company completion configuration -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;; Company is a text and code completion framework for Emacs.
+;; The name stands for "complete anything".
+;; Homepage: https://company-mode.github.io/
+
 ;;; Code:
+
 (use-package company
   :ensure t
   :defer t
@@ -15,4 +21,4 @@
 
 
 (provide 'use-company)
-;;; end use-company.el
+;;; use-company.el ends here.

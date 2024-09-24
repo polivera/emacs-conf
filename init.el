@@ -26,6 +26,9 @@
 (require 'use-embark)
 (require 'use-marginalia)
 
+;; Org Stuff
+(require 'use-org)
+
 ;; project stuff
 (require 'use-projectile)
 (require 'use-magit)

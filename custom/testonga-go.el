@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;; Something something something
+;; This script might be renamed if I find the way to make it test agnostic.
 
 ;;; Code:
 
@@ -17,7 +17,7 @@
 (declare-function treesit-node-text "treesit")
 
 ;; Treesitter query
-(defvar testonga-go/ts-query
+(defcustom testonga-go/ts-query
   "(function_declaration
        name: (identifier) @funcname (#match \"Test\" @funcname))
    (function_declaration
@@ -27,47 +27,70 @@
 	       (call_expression
 	           function: (selector_expression field: (field_identifier) @flag (#match \"Run\" @flag))
 		   arguments: (argument_list (interpreted_string_literal) @subtest)))))"
-  "Treesitter query to retrieve test on a golang test file.")
+  "Treesitter query to retrieve test on a golang test file."
+  :type 'string
+  :group 'testonga-go)
 
-(defcustom testonga-go--captures
-  ()
-  "List of captures for testing."
+(defcustom testonga-go/capture-vars
+  '("funcname" "subtest")
+  "List of capture var names from QUERY that needs to be capture."
   :type 'list
   :group 'testonga-go)
 
-
-
-;; One option that I have to achieve this is to put the add-to-list here
-;; checking on every capture if the capture-var-name is IN-LIST
-;; (kind of in_array) and then pass a curated list to the callback
-;; I can also reverse the list here and concat the parent func name to the
-;; subtests.
-;; It seems that add-to-list reverse the result order.
-(defun testonga-go--parse-query (query callback)
-  "Parse the given QUERY and use CALLBACK on every capture group."
+(defun testonga-go--parse-query (query capture-list)
+  "Parse QUERY and return a list of captured elements that match CAPTURE-LIST."
   (let* ((root-node (treesit-buffer-root-node))
-	 (matches (treesit-query-capture root-node query)))
+	 (matches (treesit-query-capture root-node query))
+	 (captures ()))
     (dolist (match matches)
       (let ((capture-var-name (car match))
-	    (capture-text (treesit-node-text (cdr match))))
-	(message "%s" capture-text)
-	(funcall callback capture-var-name capture-text)))))
-	    
+	    (capture-text (treesit-node-text (cdr match) 'no-properties)))
+	(when (member-ignore-case (format "%s" capture-var-name) capture-list)
+	  (cl-pushnew (format "%s" capture-text) captures :test #'string=))))
+    captures))
 
-(defun testonga-go/capture-callback (match-name match-content)
-  "Testonga-go after capture callback.
-After executing tree-sitter query use this callback on
-every MATCH-NAME and MATCH-CONTENT."
-  (when (or (string= match-name "funcname") (string= match-name "subtest"))
-    (add-to-list 'testonga-go--captures match-content)))
 
+(defun testonga-go--run-capture (capture)
+  "Execute test that math CAPTURE and echo the result into a new buffer."
+  (message "this will execute %s" (string-replace "\"" "" capture)))
+
+
+;;; Investigate the following method
+(defun testonga-go--exec-command (command)
+  "Execute a shell COMMAND and display the output in a temporary buffer.
+The buffer should be able to close using the \"q\" key."
+  (let ((buffer (get-buffer-create "Testonga!"))) ;; Create or get the temp buffer
+    (with-current-buffer buffer
+      (read-only-mode 0)
+      (erase-buffer)
+      (insert (format "Running command: %s\n" command))
+      (read-only-mode 1)
+      (special-mode))
+    (start-process-shell-command "mycommand" buffer command)
+    (pop-to-buffer buffer)))
+
+(defun testonga-go--test-from-capture (capture)
+  "Return a test name string for the cli tool based on CAPTURE."
+  (when (string-match-p "^\"" capture)
+    (setq capture (replace-regexp-in-string "^\"\\|\"$" "" capture)
+	  capture (string-replace " " "_" capture)
+	  capture (concat ".*/" capture)))
+  capture)
 
 (defun testonga-go-file()
   "Show all test in a Go test file in the minibuffer and execute upon selection."
   (interactive)
-  (testonga-go--parse-query testonga-go/ts-query #'testonga-go/capture-callback)
-  (dolist (item testonga-go--captures)
-    (message "%s" item)))
+  (let* ((captures (testonga-go--parse-query testonga-go/ts-query testonga-go/capture-vars))
+	 (selected-test (completing-read "Select test to run: " captures)))
+    (testonga-go--exec-command
+     (format
+      "go test -tags=unit,integration,e2e -v %s -run '%s'"
+      buffer-file-name
+      (testonga-go--test-from-capture selected-test)))))
+
+
+
+
 
 
 (provide 'testonga-go)

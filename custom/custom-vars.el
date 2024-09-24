@@ -36,7 +36,14 @@
 (defconst xapconst/projectile-cache-file (concat xapconst/autogen-folder-path "projectile.cache") "Path to projectile cache file.")
 
 ;; LSP
-(defvar xapconst/lsp-session-file (concat xapconst/autogen-folder-path "lsp-session-v1") "Path to lsp session file.")
+(defconst xapconst/lsp-session-file (concat xapconst/autogen-folder-path "lsp-session-v1") "Path to lsp session file.")
+
+;; ORG
+(defconst xapconst/org-autogen-folder (concat xapconst/autogen-folder-path "org/"))
+(defconst xapconst/org-id-locations-file (concat xapconst/org-autogen-folder "org-id-locations"))
+(defconst xapconst/org-roam-folder (file-truename "~/Documents/OrgNotes/"))
+(defconst xapconst/org-roam-dailies-dir (concat xapconst/org-roam-folder "dailies/"))
+(defconst xapconst/org-roam-db-path (concat xapconst/autogen-folder-path "org-roam.db"))
 
 
 (provide 'custom-vars)
