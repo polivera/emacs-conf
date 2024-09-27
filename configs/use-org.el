@@ -8,24 +8,38 @@
 
 (require 'custom-vars)
 
+(defun xapfunc/org-agenda-open-personal()
+  "Open personal agenda."
+  (interactive)
+  (find-file xapconst/personal-agenda-path))
+
+(defun xapfunc/org-agenda-open-stayforlong()
+  "Open personal agenda."
+  (interactive)
+  (find-file xapconst/stayforlong-agenda-path))
+
 (use-package org
   :ensure t
   :defer t
   :general
   (xap/leader-key
     "o" '(nil :which-key "ORG")
-    "o o" '(consult-outline :which-key "Outline"))
-
+    "o o" '(consult-outline :which-key "Outline")
+    "o a" '(nil :which-key "Agenda")
+    "o a o" '(org-agenda :which-key "Open")
+    "o a p" '(xapfunc/org-agenda-open-personal :which-key "Personal")
+    "o a w" '(xapfunc/org-agenda-open-stayforlong :which-key "Stayforlong")
+    )
   :init
-  (unless (file-directory-p xapconst/org-autogen-folder)
-    (make-directory xapconst/org-autogen-folder))
+  (unless (file-directory-p xapconst/org-agenda-folder)
+    (make-directory xapconst/org-agenda-folder))
   :config
   (setq org-src-preserve-indentation t
 	org-startup-indented t
 	org-return-follows-link t
-	org-id-locations-file xapconst/org-id-locations-file)
-
-;;   (setq org-id-locations-file (concat xap--org-junk-path "org-id-locations"))
+	org-id-locations-file xapconst/org-id-locations-file
+	org-agenda-files (list xapconst/personal-agenda-path
+			       xapconst/stayforlong-agenda-path))
   (dolist (face '((org-level-1 . 1.3)
 		  (org-level-2 . 1.25)
 		  (org-level-3 . 1.2)
@@ -65,55 +79,6 @@
 	;; Roam Dailies configuration
 	org-roam-dailies-directory xapconst/org-roam-dailies-dir)
   (org-roam-db-autosync-mode))
-
-
-
-
-
-
-;; (use-package org
-;;   :ensure t
-;;   :defer t
-;;   :general
-;;   (xap/leader-key
-;;     "o" '(nil :which-key "ORG")
-;;     "o o" '(consult-outline :which-key "Outline"))
-;;   :init
-;;   (unless (file-directory-p xap--org-junk-path) (make-directory xap--org-junk-path))
-;;   :config
-;;   (setq org-id-locations-file (concat xap--org-junk-path "org-id-locations"))
-;;   (setq org-src-preserve-indentation t)
-;;   (setq org-startup-indented t)
-;;   (dolist (face '((org-level-1 . 1.3)
-;;                   (org-level-2 . 1.25)
-;;                   (org-level-3 . 1.2)
-;;                   (org-level-4 . 1.15)
-;;                   (org-level-5 . 1.1)
-;;                   (org-level-6 . 1.1)
-;;                   (org-level-7 . 1.1)
-;;                   (org-level-8 . 1.1)))
-;;       (set-face-attribute (car face) nil :font xap--org-heading-font :weight 'regular :height (cdr face)))
-;;   )
-
-;; (when (file-directory-p xap--org-roam-folder)
-;;   (use-package org-roam
-;;     :ensure t
-;;     :demand t
-;;     :general
-;;     (xap/leader-key
-;;         "o r" '(nil :which-key "ORG Roam")
-;;         "o r f" '(org-roam-node-find :which-key "Outline"))
-;;     :config
-;;     (setq org-roam-directory xap--org-roam-folder
-;;           org-roam-complete-everywhere t
-;;           org-roam-db-location xap--org-roam-db)
-;;     (org-roam-db-autosync-mode)
-;;   )
-;; )
-
-;; (provide 'use-org)
-
-
 
 
 (provide 'use-org)

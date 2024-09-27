@@ -45,4 +45,8 @@
 (require 'use-elisp)
 (require 'use-go)
 
+
+;; Custom packages
+(require 'testonga-go)
+
 ;;; init.el ends here.

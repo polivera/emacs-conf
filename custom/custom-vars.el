@@ -30,6 +30,7 @@
 (defconst xapconst/places-autogen-file (concat xapconst/autogen-folder-path "places") "Places files path.")
 (defconst xapconst/auto-saves-path (concat xapconst/autogen-folder-path "auto-saves/") "Path to folder that contains autosave data.")
 (defconst xapconst/file-name-handler-alist file-name-handler-alist "Default value of \"file-name-handler-alist\".")
+(defconst xapconst/bookmark-file-path (concat xapconst/autogen-folder-path "bookmarks"))
 
 ;;; Projectile
 (defconst xapconst/projectile-bookmarks-file (concat xapconst/autogen-folder-path "projectile-bookmarks.eld") "Path to projectile known projects file.")
@@ -43,6 +44,9 @@
 (defconst xapconst/org-id-locations-file (concat xapconst/org-autogen-folder "org-id-locations"))
 (defconst xapconst/org-roam-folder (file-truename "~/Documents/OrgNotes/"))
 (defconst xapconst/org-roam-dailies-dir (concat xapconst/org-roam-folder "dailies/"))
+(defconst xapconst/org-agenda-folder (concat xapconst/org-roam-folder "agenda/"))
+(defconst xapconst/personal-agenda-path (concat xapconst/org-agenda-folder "Personal.org"))
+(defconst xapconst/stayforlong-agenda-path (concat xapconst/org-agenda-folder "S4L.org"))
 (defconst xapconst/org-roam-db-path (concat xapconst/autogen-folder-path "org-roam.db"))
 
 

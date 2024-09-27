@@ -25,6 +25,10 @@
   (projectile-mode +1)
 )
 
+(use-package vterm
+  :ensure t
+  :defer t)
+
 (provide 'use-projectile)
 ;;; use-projectile.el ends here.
 
