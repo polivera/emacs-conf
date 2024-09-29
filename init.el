@@ -48,5 +48,6 @@
 
 ;; Custom packages
 (require 'testonga-go)
+(require 'save-exec)
 
 ;;; init.el ends here.

@@ -42,5 +42,19 @@ COMMAND-NAME will be passed to \"start-process-shell-command\"."
     (start-process-shell-command command-name buffer command)
     (pop-to-buffer buffer)))
 
+
+
+(defun xaputils/run-background-command (command callback &optional process-name)
+  "Run COMMAND and execute CALLBACK after finished.
+Optionally you can use PROCESS-NAME to name the process"
+  (setq process-name (or process-name "xaputils-back-cmd"))
+  (let ((process (start-process-shell-command process-name "*Messages*" command)))
+    (set-process-sentinel
+     process
+     (lambda (_ event)
+       (when (string= event "finished\n")
+	 (funcall callback))))))
+
+
 (provide 'xap-utils)
 ;;; xap-utils.el ends here
