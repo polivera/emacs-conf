@@ -48,6 +48,7 @@ COMMAND-NAME will be passed to \"start-process-shell-command\"."
   "Run COMMAND and execute CALLBACK after finished.
 Optionally you can use PROCESS-NAME to name the process"
   (setq process-name (or process-name "xaputils-back-cmd"))
+  (message command)
   (let ((process (start-process-shell-command process-name "*Messages*" command)))
     (set-process-sentinel
      process

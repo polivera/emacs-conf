@@ -14,7 +14,7 @@
   (find-file xapconst/personal-agenda-path))
 
 (defun xapfunc/org-agenda-open-stayforlong()
-  "Open personal agenda."
+  "Open stayforlong agenda."
   (interactive)
   (find-file xapconst/stayforlong-agenda-path))
 
@@ -37,6 +37,8 @@
   (setq org-src-preserve-indentation t
 	org-startup-indented t
 	org-return-follows-link t
+	org-log-done 'time
+	org-log-done-with-time t
 	org-id-locations-file xapconst/org-id-locations-file
 	org-agenda-files (list xapconst/personal-agenda-path
 			       xapconst/stayforlong-agenda-path))

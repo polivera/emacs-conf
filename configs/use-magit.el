@@ -1,8 +1,11 @@
-;;; use-magit.el -*- lexical-binding: t; -*-
-;;; Commentary: Magit is a complete text-based user interface to Git.
+;;; use-magit.el --- Magit configuration -*- lexical-binding: t; -*-
+
+;;; Commentary:
+
+;;Magit is a complete text-based user interface to Git.
+
 ;;; Code:
 
-;; Update transient (magit dependency)
 (use-package transient
   :ensure t)
 
@@ -15,6 +18,7 @@
   (xap/leader-key
     "g"   '(nil :which-key "Magit")
     "g s" '(magit-status :which-key "Status")
+    "g f" '(magit-file-dispatch :which-key "File")
     "g l" '(magit-log :which-key "Log"))
   :config
   (setq magit-log-arguments '("--graph" "--decorate" "--color"))
@@ -34,4 +38,4 @@
 
 
 (provide 'use-magit)
-;;; end use-magit.el
+;;; use-magit.el ends here.

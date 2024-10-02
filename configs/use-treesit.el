@@ -21,7 +21,7 @@
              (html "https://github.com/tree-sitter/tree-sitter-html")
              (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
 	     (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.20.2"))
-	     (php . ("https://github.com/tree-sitter/tree-sitter-php" "v0.23.2" "php/src"))
+	     (php . ("https://github.com/tree-sitter/tree-sitter-php" "v0.20.0" "php/src"))
              (python "https://github.com/tree-sitter/tree-sitter-python")
              (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
              (yaml "https://github.com/ikatyang/tree-sitter-yaml")))

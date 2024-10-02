@@ -10,7 +10,11 @@
 # Undo-tree save-files
 *.~undo-tree
 
+# Tree sitter
 tree-sitter
 
 # Autogen folder
 autogen
+
+# Cache folder that I can't get rid of
+eln-cache

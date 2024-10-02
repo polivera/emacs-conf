@@ -44,10 +44,22 @@
 ;; development - language specific.
 (require 'use-elisp)
 (require 'use-go)
+;; (require 'use-php)
+;; (require 'use-c)
 
 
 ;; Custom packages
-(require 'testonga-go)
-(require 'save-exec)
+(use-package emacs
+  :ensure nil
+  :config
+  ;; Load PATH env var into emacs env.
+  (when xapconst/is-linux
+    (setenv "TERM" "vterm") ;; TERM is set so I don't have the dumb term error.
+    (let ((path-from-shell (shell-command-to-string "/usr/bin/zsh -i -c 'echo $PATH'")))
+      (setenv "PATH" path-from-shell)))
+
+  (require 'testonga-go)
+  (require 'save-exec)
+  (require 'env-loader))
 
 ;;; init.el ends here.

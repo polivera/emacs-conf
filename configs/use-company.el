@@ -17,7 +17,9 @@
   :config
   (define-key company-active-map (kbd "C-j") #'company-select-next)
   (define-key company-active-map (kbd "C-k") #'company-select-previous)
-  (define-key company-active-map (kbd "C-n") #'company-complete-selection))
+  (define-key company-active-map (kbd "C-n") #'company-complete-selection)
+  (define-key company-active-map (kbd "<return>") nil)
+  (define-key company-active-map (kbd "RET") nil))
 
 
 (provide 'use-company)

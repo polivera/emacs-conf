@@ -60,5 +60,16 @@ See `save-exec-mode-commands` to configure."
     (message "I am disabling this")
     (remove-hook 'after-save-hook 'save-exec-mode--execute)))
 
+
+;; --------------------------------------------------------------------------
+;; Enable mode
+(use-package emacs
+  :ensure nil
+  :config
+  (add-hook 'go-ts-mode-hook #'save-exec-mode)
+  (add-hook 'json-ts-mode-hook #'save-exec-mode))
+
+
+
 (provide 'save-exec)
 ;;; save-exec.el ends here.
