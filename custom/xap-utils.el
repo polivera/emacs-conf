@@ -43,7 +43,6 @@ COMMAND-NAME will be passed to \"start-process-shell-command\"."
     (pop-to-buffer buffer)))
 
 
-
 (defun xaputils/run-background-command (command callback &optional process-name)
   "Run COMMAND and execute CALLBACK after finished.
 Optionally you can use PROCESS-NAME to name the process"

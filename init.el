@@ -1,4 +1,4 @@
-;;; init.el --- Emacs configuration file -*- lexical-binding: t; -*-
+;;; Init.el --- Emacs configuration file -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -32,6 +32,8 @@
 ;; project stuff
 (require 'use-projectile)
 (require 'use-magit)
+(require 'use-dired)
+(require 'use-treemacs)
 
 ;; tree-sitter
 (require 'use-treesit)
@@ -44,9 +46,10 @@
 ;; development - language specific.
 (require 'use-elisp)
 (require 'use-go)
-;; (require 'use-php)
-;; (require 'use-c)
-
+(require 'use-php)
+(require 'use-c)
+(require 'use-makefile)
+(require 'use-protobuf)
 
 ;; Custom packages
 (use-package emacs

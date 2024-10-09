@@ -60,6 +60,7 @@
     "o r" '(nil :which-key "ORG Roam")
     "o r f" '(org-roam-node-find :which-key "Outline")
     "o r i" '(org-roam-node-insert :which-key "Insert")
+    "o r c" '(org-roam-capture :which-key "Capture")
     "o r d" '(nil :which-key "Dailies")
     "o r d t" '(org-roam-dailies-goto-today :which-key "GoTo today")
     "o r d c" '(org-roam-dailies-capture-today :which-key "Capture today"))

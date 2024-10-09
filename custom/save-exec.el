@@ -22,6 +22,8 @@
 (defcustom save-exec-mode-commands
   '(("go" . "gosimports -w ###file###")
     ("json" . "prettier -w ###file###")
+    ("php" . "php-cs-fixer fix ###file### --rules=@PSR12,@PhpCsFixer,@Symfony")
+    ("c" . "clang-format -i --style=LLVM ###file###")
     ("el" . "echo 'do-something -w ###file###'"))
   "An assoc list with file extension and command."
   :type 'list
@@ -57,7 +59,6 @@ See `save-exec-mode-commands` to configure."
   :group 'save-exec-mode-group
   (if save-exec-mode
       (add-hook 'after-save-hook 'save-exec-mode--execute)
-    (message "I am disabling this")
     (remove-hook 'after-save-hook 'save-exec-mode--execute)))
 
 
@@ -67,9 +68,9 @@ See `save-exec-mode-commands` to configure."
   :ensure nil
   :config
   (add-hook 'go-ts-mode-hook #'save-exec-mode)
+  (add-hook 'php-ts-mode-hook #'save-exec-mode)
+  (add-hook 'c-ts-mode-hook #'save-exec-mode)
   (add-hook 'json-ts-mode-hook #'save-exec-mode))
-
-
 
 (provide 'save-exec)
 ;;; save-exec.el ends here.

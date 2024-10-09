@@ -11,9 +11,6 @@
 (use-package lsp-mode
   :ensure t
   :demand t
-  :hook (
-	 (go-ts-mode . lsp-mode-deferred)
-	 )
   :commands
   (lsp lsp-deferred)
   :init

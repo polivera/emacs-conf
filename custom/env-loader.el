@@ -34,9 +34,10 @@ The env file should be located on the path from `env-loader-file-path`.
 The value from `env-loader-file-path` will be concatenated to project root path."
   (message "Loading environment file: %s" (concat (projectile-project-root) env-loader-file-path))
   (let ((file-path (concat (projectile-project-root) env-loader-file-path)))
-    (with-temp-buffer
-      (insert-file-contents file-path)
-      (buffer-string))))
+    (when (file-exists-p file-path)
+      (with-temp-buffer
+	(insert-file-contents file-path)
+	(buffer-string)))))
 
 
 (defun env-loader--split-var-line (var-line)

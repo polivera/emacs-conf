@@ -6,6 +6,14 @@
 
 ;;; Code:
 
+(use-package php-mode
+  :ensure t
+  :demand t)
+
+(use-package php-ts-mode
+  :ensure (:host github :repo "emacs-php/php-ts-mode")
+  :demand t)
+
 (use-package emacs
   :ensure nil
   :hook (
@@ -16,11 +24,8 @@
 
   (add-hook 'go-ts-mode-hook (lambda()
 			       (setq tab-width 4)
-			       ;; (setq go-ts-mode-indent-offset 4)
-			       (setq truncate-lines t)))
-			       
-)
-
+			       (setq php-ts-mode-indent-offset 4)
+			       (setq truncate-lines t))))
 
 (provide 'use-php)
 ;;; use-php.el ends here.

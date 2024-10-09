@@ -36,6 +36,9 @@
 (defconst xapconst/projectile-bookmarks-file (concat xapconst/autogen-folder-path "projectile-bookmarks.eld") "Path to projectile known projects file.")
 (defconst xapconst/projectile-cache-file (concat xapconst/autogen-folder-path "projectile.cache") "Path to projectile cache file.")
 
+;;; Treemacs
+(defconst xapconst/treemacs-cache-folder (concat xapconst/autogen-folder-path "treemacs/"))
+
 ;; LSP
 (defconst xapconst/lsp-session-file (concat xapconst/autogen-folder-path "lsp-session-v1") "Path to lsp session file.")
 
