@@ -50,7 +50,7 @@
   (setq auto-save-list-file-prefix xapconst/auto-saves-path) ;; Auto save session, files and locks
   (setq auto-save-file-name-transforms `((".*" ,xapconst/auto-saves-path t))) ;; Set lock files path
   (setq lock-file-name-transforms `((".*" ,xapconst/auto-saves-path t)))
-  (setq bookmark-file xapconst/bookmark-file-path)
+  (setq bookmark-default-file xapconst/bookmark-file-path)
 
   ;; Exclusive macOS configs
   (when xapconst/is-macos

@@ -10,7 +10,6 @@
 (require 'custom-vars)
 
 ;; Elpaca configuration
-
 (defvar elpaca-installer-version 0.8)
 (defvar elpaca-directory (expand-file-name "elpaca/" xapconst/autogen-folder-path))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))

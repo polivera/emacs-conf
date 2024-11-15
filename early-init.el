@@ -15,6 +15,7 @@
 
 ;; Require custom vars to be used here
 (require 'custom-vars)
+
 ;; Define custom variables
 (defconst xapconst/gc-cons-percentage gc-cons-percentage "Default value of \"gc-cons-percentage\".")
 (defconst xapconst/vc-handled-backends vc-handled-backends "Default value of \"vc-handled-backends\".")
@@ -53,12 +54,20 @@
 (setq package-enable-at-startup nil) ; This is required by elpaca
 (setq package-user-dir xapconst/elpa-path)
 
+
+;; Redirect native compilation cache dir
+;; (when (and (fboundp 'startup-redirect-eln-cache)
+;;            (fboundp 'native-comp-available-p)
+;;            (native-comp-available-p))
+;;   (startup-redirect-eln-cache
+;;    (convert-standard-filename xapconst/eln-cache-path)))
+
 ;; Set native compilation eln file path.
 (when (native-comp-available-p)
   (setq native-comp-eln-load-path (cdr native-comp-eln-load-path))
   (defvar native-compile-target-directory xapconst/eln-cache-path)
   (add-to-list 'native-comp-eln-load-path xapconst/eln-cache-path)
-  (defvar startup-redirect-eln-cache xapconst/eln-cache-path)
+  (startup-redirect-eln-cache xapconst/eln-cache-path)
   (defvar native-comp-async-report-warnings-errors nil))
 
 ;; Layout configuration ------------------------------------------------------------------------------------------------
