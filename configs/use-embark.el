@@ -21,5 +21,10 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+
+(use-package wgrep
+  :ensure t
+  :demand t)
+
 (provide 'use-embark)
 

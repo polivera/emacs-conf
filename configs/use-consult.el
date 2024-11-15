@@ -1,5 +1,10 @@
-;;; use-consult.el -*- lexical-binding: t; -*-
-;;; Commentary: 
+;;; use-consult.el --- Consult configuration file -*- lexical-binding: t; -*-
+
+;;; Commentary:
+
+;; Configure consult for Emacs.
+;; Package homepage: https://github.com/minad/consult
+
 ;;; Code:
 (use-package consult
   :ensure t
@@ -26,6 +31,9 @@
   (advice-add #'register-preview :override #'consult-register-window)
   ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref))
+        xref-show-definitions-function #'consult-xref)
+
+  )
 
 (provide 'use-consult)
+;;; use-consult.el ends here.

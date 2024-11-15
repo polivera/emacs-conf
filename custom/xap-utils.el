@@ -25,11 +25,12 @@
     captures))
 
 
-(defun xaputils/exec-command (command buffer-name &optional command-title command-name)
+(defun xaputils/exec-command-no-color (command buffer-name &optional command-title command-name)
   "Execute a shell COMMAND and display the output in a temporary buffer.
 The temp buffer will be named BUFFER-NAME and can be referenced in later calls.
 COMMAND-TITLE will be the first line of the new buffer if set.
-COMMAND-NAME will be passed to \"start-process-shell-command\"."
+COMMAND-NAME will be passed to \"start-process-shell-command\".
+The result buffer is shown WITHOUT ansi colors."
   (setq command-title (or command-title (format "Running command: %s" command)))
   (setq command-name (or command-name "mycommand"))
   (let ((buffer (get-buffer-create buffer-name)))
@@ -41,6 +42,36 @@ COMMAND-NAME will be passed to \"start-process-shell-command\"."
       (special-mode))
     (start-process-shell-command command-name buffer command)
     (pop-to-buffer buffer)))
+
+
+(defun xaputils/exec-command (command buffer-name &optional command-title command-name)
+  "Execute a shell COMMAND and display the output in a temporary buffer.
+The temp buffer will be named BUFFER-NAME and can be referenced in later calls.
+COMMAND-TITLE will be the first line of the new buffer if set.
+COMMAND-NAME will be passed to `start-process-shell-command`."
+  (require 'ansi-color)
+  (setq command-title (or command-title (format "Running command: %s" command)))
+  (setq command-name (or command-name "mycommand"))
+  (let ((buffer (get-buffer-create buffer-name)))
+    (with-current-buffer buffer
+      (read-only-mode 0)
+      (erase-buffer)
+      ;;(insert (concat command-title "\n"))
+      (read-only-mode 1)
+      (special-mode))
+    (pop-to-buffer buffer)
+
+    (let ((proc (start-process-shell-command command-name buffer command)))
+      (set-process-filter
+       proc
+       (lambda (proc output)
+         (with-current-buffer (process-buffer proc)
+           (let ((inhibit-read-only t))
+             ;; Insert the command output
+             (insert output)
+             ;; Apply ANSI color translation
+             (ansi-color-apply-on-region (point-min) (point-max)))))))
+    ))
 
 
 (defun xaputils/run-background-command (command callback &optional process-name)
@@ -56,5 +87,18 @@ Optionally you can use PROCESS-NAME to name the process"
 	 (funcall callback))))))
 
 
+(defun xaputils/get-path-list()
+  "The all $PATH entries in a list."
+  (split-string (getenv "PATH") ":"))
+
+
+(defun xaputils/update-path()
+  "Update Emacs path value with zsh path value."
+  (let ((shell-cmd "/usr/bin/zsh"))
+    (when xapconst/is-macos
+      (setq shell-cmd "/bin/zsh"))
+    (let ((path-from-shell (shell-command-to-string (concat shell-cmd " -i -c 'echo $PATH'"))))
+      (setenv "PATH" path-from-shell))))
+  
 (provide 'xap-utils)
 ;;; xap-utils.el ends here

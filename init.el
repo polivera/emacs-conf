@@ -15,8 +15,8 @@
 (require 'use-modeline)
 
 ;; keybindings
-(require 'use-evil)
 (require 'use-general)
+(require 'use-evil)
 (require 'use-which-key)
 
 ;; minibuffer
@@ -34,6 +34,7 @@
 (require 'use-magit)
 (require 'use-dired)
 (require 'use-treemacs)
+(require 'use-hl-todo)
 
 ;; tree-sitter
 (require 'use-treesit)
@@ -51,17 +52,30 @@
 (require 'use-makefile)
 (require 'use-protobuf)
 
+;; Enable debugging information
+;; (setq debug-on-error t)
+;; (setq warning-minimum-log-level :debug)
+
 ;; Custom packages
 (use-package emacs
   :ensure nil
   :config
-  ;; Load PATH env var into emacs env.
-  (when xapconst/is-linux
-    (setenv "TERM" "vterm") ;; TERM is set so I don't have the dumb term error.
-    (let ((path-from-shell (shell-command-to-string "/usr/bin/zsh -i -c 'echo $PATH'")))
-      (setenv "PATH" path-from-shell)))
+  (require 'xap-utils)
+
+  ;; Handle PATH on emacs
+  (xaputils/update-path)
+  (setq exec-path (xaputils/get-path-list))
+
+  ;; TODO: Move this to another file at some point
+  (require 'ansi-color)
+  (defun xapfunc/set-ansi-colors-on-compile-buffer ()
+    "Apply ANSI color codes to the current `compilation-filter' output."
+    (ansi-color-apply-on-region compilation-filter-start (point)))
+  (add-hook 'compilation-filter-hook 'xapfunc/set-ansi-colors-on-compile-buffer)
+  ;; end
 
   (require 'testonga-go)
+  (require 'testonga-php)
   (require 'save-exec)
   (require 'env-loader))
 

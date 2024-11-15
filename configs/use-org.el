@@ -31,6 +31,8 @@
     "o a w" '(xapfunc/org-agenda-open-stayforlong :which-key "Stayforlong")
     )
   :init
+  (unless (file-directory-p xapconst/org-autogen-folder)
+    (make-directory xapconst/org-autogen-folder))
   (unless (file-directory-p xapconst/org-agenda-folder)
     (make-directory xapconst/org-agenda-folder))
   :config
@@ -58,7 +60,7 @@
   :general
   (xap/leader-key
     "o r" '(nil :which-key "ORG Roam")
-    "o r f" '(org-roam-node-find :which-key "Outline")
+    "o r f" '(org-roam-node-find :which-key "Find/Create")
     "o r i" '(org-roam-node-insert :which-key "Insert")
     "o r c" '(org-roam-capture :which-key "Capture")
     "o r d" '(nil :which-key "Dailies")

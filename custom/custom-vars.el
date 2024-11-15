@@ -6,6 +6,9 @@
 
 ;;; Code:
 
+;; Early init things
+(defconst xapconst/gc-cons-threshold 104857600 "Default value of \"gc-cons-threshold\" (8GB).")
+
 ;; Base autogen path
 (defconst xapconst/autogen-folder-path (concat user-emacs-directory "autogen/") "Path to auto generated files.")
 
@@ -50,7 +53,7 @@
 (defconst xapconst/org-agenda-folder (concat xapconst/org-roam-folder "agenda/"))
 (defconst xapconst/personal-agenda-path (concat xapconst/org-agenda-folder "Personal.org"))
 (defconst xapconst/stayforlong-agenda-path (concat xapconst/org-agenda-folder "S4L.org"))
-(defconst xapconst/org-roam-db-path (concat xapconst/autogen-folder-path "org-roam.db"))
+(defconst xapconst/org-roam-db-path (concat xapconst/org-autogen-folder "org-roam.db"))
 
 
 (provide 'custom-vars)

@@ -34,10 +34,11 @@ The env file should be located on the path from `env-loader-file-path`.
 The value from `env-loader-file-path` will be concatenated to project root path."
   (message "Loading environment file: %s" (concat (projectile-project-root) env-loader-file-path))
   (let ((file-path (concat (projectile-project-root) env-loader-file-path)))
-    (when (file-exists-p file-path)
+    (if (file-exists-p file-path)
       (with-temp-buffer
 	(insert-file-contents file-path)
-	(buffer-string)))))
+	(buffer-string))
+      nil)))
 
 
 (defun env-loader--split-var-line (var-line)
@@ -54,18 +55,18 @@ The value from `env-loader-file-path` will be concatenated to project root path.
 (defun env-loader--load()
   "Load environment variables from specified file.
 See `env-loader-file-path`."
-  (let* ((env-content (env-loader--load-file))
-	(var-list (split-string env-content "\n")))
-    (dolist (env-var var-list)
-      (when (and (> (length env-var) 0)
-		 (let ((first-char (aref env-var 0)))
-		   (char-uppercase-p first-char)))
-	(let* ((var-parts (env-loader--split-var-line env-var)))
-	  (when var-parts
-	    (let ((var-name (car var-parts))
-		  (var-value (nth 1 var-parts)))
-	      (message var-name)
-	      (setenv var-name var-value))))))))
+  (let ((env-content (env-loader--load-file)))
+    (when env-content
+      (let ((var-list (split-string env-content "\n")))
+	(dolist (env-var var-list)
+	  (when (and (> (length env-var) 0)
+		     (let ((first-char (aref env-var 0)))
+		       (char-uppercase-p first-char)))
+	    (let* ((var-parts (env-loader--split-var-line env-var)))
+	      (when var-parts
+		(let ((var-name (car var-parts))
+		      (var-value (nth 1 var-parts)))
+		  (setenv var-name var-value))))))))))
     
 
 (defun env-loader-load()

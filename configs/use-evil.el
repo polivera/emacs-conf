@@ -19,9 +19,10 @@
   (setq evil-echo-state nil)
   (setq save-interprogram-paste-before-kill t)
   (setq evil-want-C-u-scroll t)
-  
+  :general
+  (xap/quick-leader
+    "\\" '(evil-window-vsplit :which-key "Vertical Split"))
   :config
-
   ;; Evil define custom functions for deleting and changing without adding content to the kill ring
   (evil-define-operator xapfunc/evil-delete-no-kill-ring (beg end type register yank-handler)
     "Delete text from BEG to END with TYPE. Do not save it in any register."

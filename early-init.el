@@ -15,12 +15,10 @@
 
 ;; Require custom vars to be used here
 (require 'custom-vars)
-
 ;; Define custom variables
-(defconst xapconst/gc-cons-threshold gc-cons-threshold "Default value of \"gc-cons-threshold\".")
 (defconst xapconst/gc-cons-percentage gc-cons-percentage "Default value of \"gc-cons-percentage\".")
 (defconst xapconst/vc-handled-backends vc-handled-backends "Default value of \"vc-handled-backends\".")
-(defconst xapconst/read-process-output (* 1024 3072) "Default value for \"read-process-output-max\" (3M).")
+(defconst xapconst/read-process-output (* 1024 1024 4) "Default value for \"read-process-output-max\" (4M).")
 (defconst xapconst/file-name-handler-alist file-name-handler-alist "Default value of \"file-name-handler-alist\".")
 (defconst xapconst/initial-background-color "#25272f" "Initial background color (before apply theme).")
 (defconst xapconst/initial-foreground-color "#B3B9C4" "Initial foreground color (before apply theme).")
@@ -38,6 +36,9 @@
           file-name-halder-alist xapconst/file-name-handler-alist
           vc-handled-backends xapconst/vc-handled-backends
           read-process-output-max xapconst/read-process-output)))
+
+;; LSP Related config
+(setenv "LSP_USE_PLISTS" "true")
 
 ;; Don't run GC on font caches
 (setq inhibit-compacting-font-caches t)

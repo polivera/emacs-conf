@@ -22,9 +22,11 @@
 (defcustom save-exec-mode-commands
   '(("go" . "gosimports -w ###file###")
     ("json" . "prettier -w ###file###")
-    ("php" . "php-cs-fixer fix ###file### --rules=@PSR12,@PhpCsFixer,@Symfony")
+    ("php" . "php-cs-fixer fix ###file### --using-cache=no --rules=@PSR12,@PSR1,@PSR2")
     ("c" . "clang-format -i --style=LLVM ###file###")
-    ("el" . "echo 'do-something -w ###file###'"))
+    ("h" . "clang-format -i --style=LLVM ###file###")
+    ("sh" . "shfmt -l -w ###file###")
+    )
   "An assoc list with file extension and command."
   :type 'list
   :group 'save-exec)
@@ -45,12 +47,13 @@
   (let* ((f-extension (file-name-extension (buffer-file-name)))
 	 ;; Get the current buffer
 	 (cmd (save-exec-mode-get-command f-extension)))
-    (setq cmd (string-replace "###file###" (buffer-file-name) cmd))
     (when cmd
-      (xaputils/run-background-command
-       cmd
-       (lambda()
-	 (revert-buffer nil t t))))))
+      (setq cmd (string-replace "###file###" (buffer-file-name) cmd))
+      (when cmd
+	(xaputils/run-background-command
+	 cmd
+	 (lambda()
+	   (revert-buffer nil t t)))))))
 
 (define-minor-mode save-exec-mode
   "Automatically execute provided command after file save.

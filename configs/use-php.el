@@ -22,6 +22,9 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.php\\'" . php-ts-mode))
 
+  ;; TODO: Create a folder for intelephense cache and set the variable
+  ;; lsp-intelephense-storage-path to the autogen folder.
+
   (add-hook 'go-ts-mode-hook (lambda()
 			       (setq tab-width 4)
 			       (setq php-ts-mode-indent-offset 4)
