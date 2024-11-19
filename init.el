@@ -43,6 +43,7 @@
 (require 'use-lsp)
 (require 'use-company)
 (require 'use-flycheck)
+(require 'use-yasnippet)
 
 ;; development - language specific.
 (require 'use-elisp)
