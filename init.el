@@ -28,6 +28,7 @@
 
 ;; Org Stuff
 (require 'use-org)
+(require 'use-org-roam)
 
 ;; project stuff
 (require 'use-projectile)
